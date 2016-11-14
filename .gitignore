@@ -25,27 +25,27 @@ void setup() {
 
 void loop() {
 
-  if (digitalRead(pulsador) == HIGH) {
-    delay(900);
-
-    if (contador < 99) {
+  if (contador < 99) {
       contador++;
 
       cont_centena = (contador) / 100;
       digitalWrite(unidades, LOW);
-      digitalWrite(decenas, HIGH);
-      dis(cont_decena);
-      delay(100);
-      
-      cont_decena = (contador) / 10;
-      digitalWrite(unidades, LOW);
-      digitalWrite(decenas, HIGH);
+      digitalWrite(decenas, LOW);
+      digitalWrite(centenas, HIGH);
       dis(cont_decena);
       delay(100);
 
-      cont_unidad = contador - (cont_decena * 10);
+      cont_decena = (contador - cont_decena * 100) / 10;
+      digitalWrite(unidades, LOW);
+      digitalWrite(decenas, HIGH);
+      digitalWrite(centenas, LOW);
+      dis(cont_decena);
+      delay(100);
+
+      cont_unidad = contador - (cont_centena * 100 + cont_decena * 10);
       digitalWrite(unidades, HIGH);
       digitalWrite(decenas, LOW);
+      digitalWrite(centenas, LOW);
       dis(cont_unidad);
       delay(100);
     }
@@ -53,7 +53,6 @@ void loop() {
       contador = 0;
     }
   }
-}
 
 void dis (int numero) {
 
